@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Movie List</title>
+	<div th:insert="~{fragments/header :: header}"></div>
+</head>
+
+<body>
+<div th:if= "${movielist == null}">
+Movies doesn't exist.
+</div>
+	<div class="col-8" th:if="${movielist != null}">
+		<h3>Movies List</h3>
+		<!--<p th:text=${cart.movies.size()}></p>-->
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Director</th>
+					<th>Genre</th>
+					<th>Year</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="movies : ${movielist}">
+					<td th:text=${movies.name}></td>
+					<td th:text=${movies.director}></td>
+					<td th:text=${movies.genre}></td>
+					<td th:text=${movies.year}></td>
+					<td>
+					<a th:href="@{'delete/'+${movies.id}}">Delete</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div th:insert="~{fragments/footer :: footer}"></div>
+
+</body>
+
+</html>

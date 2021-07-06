@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Movie</title>
+	<div th:insert="~{fragments/header :: header}"></div>
+</head>
+
+<body>
+<div class="col-4">
+<h2>ADD MOVIE</h2>
+	<form method="POST" th:object="${movie}">
+	
+		<div class="form-group">
+			<label for="name">Name</label>
+			<input type="text" th:field="*{name}" class="form-control is-invalid"/>
+			<span class="invalid-feedback" th:if="${#fields.hasErrors('name')}"
+                       th:errors="*{name}">Name Error</span>
+
+	</div>
+	
+	<div class="form-group">
+		<label for="director">Director</label>
+		<input type="text" th:field="*{director}" class="form-control is-invalid"/>
+		<span class="invalid-feedback" th:if="${#fields.hasErrors('director')}"
+													th:errors="*{director}">Director Error</span>
+	</div>
+	
+	<div class="form-group">
+                    <label for="genre">Choose Genre</label>
+                    <select class="form-control selectpicker" th:field="*{genre}" >
+                        <option value="">Nothing selected</option>
+                        <option th:each="genre : ${T(com.SpringFirst.Model.Genre).values()}"
+                                th:value="${genre}"
+                                th:text="${genre}">
+                        </option>
+
+                    </select>
+                </div>
+	
+	<div class="form-group">
+		<label for="director">Director</label>
+		<input type="text" th:field="*{year}" class="form-control is-invalid"/>
+		<span class="invalid-feedback" th:if="${#fields.hasErrors('year')}"
+			th:errors="*{year}">Year Error</span>
+	</div>
+		
+
+
+ <button type="Submit" class="btn btn-primary">Create</button>
+ </form>
+</div>
+	
+ <div th:insert="~{fragments/footer :: footer}">...</div>
+ </body>
+</html>
