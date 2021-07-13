@@ -8,7 +8,9 @@ public interface MovieService {
 	List<MovieDto> getAllMovies();
 	List<MovieDto> getMovieByName(String  name);
 	List<MovieDto> getMovieByNameLike(String  name);
-	 MovieDto getMovieById(Long id);
+	List<MovieDto> getMovieByNameLikeOne(String  name);
+	List<MovieDto> getMovieGreaterThanYear(Long  year);
+	MovieDto getMovieById(Long id);
 	MovieDto saveMovie(MovieDto movie);
 	void deleteMovieById(Long movieId);
 

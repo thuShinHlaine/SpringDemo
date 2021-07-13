@@ -17,6 +17,16 @@ public class MovieServiceImpl implements MovieService{
 	
 	@Autowired(required = true)
 	ModelMapper mapper;
+	private List<MovieDto> entityListToDto(Iterable<Movie> movies) {
+		List<MovieDto> movieDtos = new ArrayList<MovieDto>();		
+		for(Movie movie : movies)
+		{
+			MovieDto dto = mapper.map(movie, MovieDto.class);
+			movieDtos.add(dto);
+		}
+		
+		return movieDtos;
+	}
 
 	@Override
 	public List<MovieDto> getAllMovies() {
@@ -57,16 +67,16 @@ public class MovieServiceImpl implements MovieService{
 		return entityListToDto(movies);
 	}
 
+	@Override
+	public List<MovieDto> getMovieByNameLikeOne(String name) {
+		Iterable<Movie> movies = this.movieRepository.findByNameLike(name);
+		return entityListToDto(movies);
+	}
 
-	private List<MovieDto> entityListToDto(Iterable<Movie> movies) {
-		List<MovieDto> movieDtos = new ArrayList<MovieDto>();		
-		for(Movie movie : movies)
-		{
-			MovieDto dto = mapper.map(movie, MovieDto.class);
-			movieDtos.add(dto);
-		}
-		
-		return movieDtos;
+	@Override
+	public List<MovieDto> getMovieGreaterThanYear(Long year) {
+		Iterable<Movie> movies = this.movieRepository.findByYearGreaterThanEqual(year);
+		return entityListToDto(movies);
 	}
 
 	
