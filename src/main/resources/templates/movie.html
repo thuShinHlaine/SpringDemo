@@ -7,24 +7,25 @@
 </head>
 
 <body>
-<div class="col-4">
-<h2>ADD MOVIE</h2>
-	<form method="POST" th:object="${movie}">
-	
-		<div class="form-group">
-			<label for="name">Name</label>
-			<input type="text" th:field="*{name}" class="form-control is-invalid"/>
-			<span class="invalid-feedback" th:if="${#fields.hasErrors('name')}"
-                       th:errors="*{name}">Name Error</span>
-
-	</div>
+	<div class="col-4">
+		<h2>ADD MOVIE</h2>
+		<form method="POST" th:object="${movie}" action="/movie">
+<input type="hidden" th:field="*{id}" class="form-control"/>
+			<div class="form-group">
+				<label for="name">Name</label>
+				<input type="text" th:field="*{name}" class="form-control" />
+				<div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('name')}">
+					<span th:errors="*{name}">Name Error</span>
+						</div>
+							</div>
 	
 	<div class="form-group">
 		<label for="director">Director</label>
-		<input type="text" th:field="*{director}" class="form-control is-invalid"/>
-		<span class="invalid-feedback" th:if="${#fields.hasErrors('director')}"
-													th:errors="*{director}">Director Error</span>
-	</div>
+		<input type="text" th:field="*{director}" class="form-control " />
+		<div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('director')}">
+			<span th:errors="*{director}">Director Error</span>
+	</div>													
+		</div>
 	
 	<div class="form-group">
                     <label for="genre">Choose Genre</label>
@@ -39,17 +40,30 @@
                 </div>
 	
 	<div class="form-group">
-		<label for="director">Director</label>
-		<input type="text" th:field="*{year}" class="form-control is-invalid"/>
-		<span class="invalid-feedback" th:if="${#fields.hasErrors('year')}"
-			th:errors="*{year}">Year Error</span>
-	</div>
+		<label for="year">Year</label>
 		
+		<input type="text"  th:field="${movie.year}" class="form-control" />
+		<div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('year')}">
+	  <span th:errors="*{year}">Year Error</span>
+	</div>
+			
+		</div>
+		
+<div class="form-group">
+<div th:if="${movie.id == null}">
 
+			<button type="submit" class="btn btn-primary">Create</button>
+		</div>	
 
- <button type="Submit" class="btn btn-primary">Create</button>
+ <div th:if="${movie.id }">
+ 
+			<button type="submit" class="btn btn-primary">Update</button>
+		</div>
+		
+		</div>
  </form>
 </div>
+
 	
  <div th:insert="~{fragments/footer :: footer}">...</div>
  </body>

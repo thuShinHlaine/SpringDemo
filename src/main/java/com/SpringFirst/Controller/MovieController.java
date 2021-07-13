@@ -10,8 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -53,16 +55,15 @@ public class MovieController {
 	}
 
 	@PostMapping
-	public String createMovie(@Valid MovieDto movie, Errors errors, @SessionAttribute("cart") ShoppingCart cart,
-											Model model) {
+	public String createMovie(@Valid @ModelAttribute("movie") MovieDto movie, Errors errors, @SessionAttribute("cart") ShoppingCart cart) {
 		if (errors.hasErrors()) {
 			log.info("Post Controller has Error");
-			//.addMovie(movie);
+			
 			return "movie";
 		} else {
 			log.info("Post Controller");
 			this.movieService.saveMovie(movie);
-			//cart.addMovie(movie);
+			
 			return "redirect:movie/movielist";
 		}
 
@@ -72,7 +73,43 @@ public class MovieController {
 	public String emptyMovie(Model model) {
 		List<MovieDto> movielist =this.movieService.getAllMovies();
 		model.addAttribute("movielist", movielist);
-
+		return "movielist";
+	}
+	
+	@GetMapping("update/{movieId}")
+	public String updateMovie(@PathVariable Long movieId ,Model model) {
+		log.info("Update Movie "+movieId);
+		MovieDto movie = this.movieService.getMovieById(movieId);
+		model.addAttribute("movie",movie);
+		return "movie";
+	}
+	
+	@GetMapping("delete/{movieId}")
+	public String deleteMovie(@PathVariable Long movieId ) {
+		log.info("Delete Movie "+movieId);
+		this.movieService.deleteMovieById(movieId);
+		return "redirect:/movie/movielist";
+	}
+	
+	@GetMapping("search")
+	public String findByName(@RequestParam String name,Model model ) {
+		log.info("Search Movie "+name);
+		List<MovieDto> movies = this.movieService.getMovieByName(name);
+		for(MovieDto dto: movies) {
+			log.info(dto.toString());
+		}
+		model.addAttribute("movielist", movies);
+		return "movielist";
+	}
+	
+	@GetMapping("search-like")
+	public String findByNameLike(@RequestParam String name,Model model ) {
+		log.info("Search Movie "+name);
+		List<MovieDto> movies = this.movieService.getMovieByNameLike(name);
+		for(MovieDto dto: movies) {
+			log.info(dto.toString());
+		}
+		model.addAttribute("movielist", movies);
 		return "movielist";
 	}
 

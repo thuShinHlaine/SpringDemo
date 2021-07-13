@@ -15,19 +15,19 @@ import lombok.Data;
 @Data
 public class MovieDto {
 	
-	private long id;
+	private Long id;
 	
-	@NotNull(message ="Name is Required")
+	@NotNull
 	@Size (min =5 , message ="Name must be at least 5 characters long")
 	private String name;
 	
-	@NotNull(message ="Director is Required")
+	@NotNull
 	@Size (min =5 , message ="Director must be at least 5 characters long")
 	private String director;
 	
-	
+	@NotNull(message="Year is Required")
 	@Range(min = 1995, max =2021,message ="Between 1995 2021")
-	private long year;
+	private Long year;
 	
 	private Genre genre ;
 	

@@ -20,13 +20,13 @@ public class Movie implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
-	private long id;
+	private Long id;
 	
 	private String name;
 	
 	private String director;
 	
-	private long year;
+	private Long year;
 	
 	@Enumerated(EnumType.STRING)
 	private Genre genre ;

@@ -20,15 +20,8 @@ public class MovieServiceImpl implements MovieService{
 
 	@Override
 	public List<MovieDto> getAllMovies() {
-		List<MovieDto> movieDtos = new ArrayList<MovieDto>();
 		Iterable<Movie> movies = this.movieRepository.findAll();
-		for(Movie movie : movies)
-		{
-			MovieDto dto = mapper.map(movie, MovieDto.class);
-			movieDtos.add(dto);
-		}
-		
-		return movieDtos;
+		return entityListToDto(movies);
 	}
 
 	@Override
@@ -39,10 +32,43 @@ public class MovieServiceImpl implements MovieService{
 	}
 
 	@Override
-	public void deleteMovie(MovieDto movieDto) {
-		Movie movie =mapper.map(movieDto, Movie.class);
-		this.movieRepository.delete(movie);
+	public MovieDto getMovieById(Long id) {
+		Movie movie = this.movieRepository.findById(id).get();
+		MovieDto dto = mapper.map(movie, MovieDto.class);
+		
+		return dto;
+	}
+
+	@Override
+	public void deleteMovieById(Long movieId) {
+		this.movieRepository.deleteById(movieId);
 		
 	}
 
+	@Override
+	public List<MovieDto> getMovieByName(String name) {
+		Iterable<Movie> movies = this.movieRepository.findByName(name);
+		return entityListToDto(movies);
+	}
+	
+	@Override
+	public List<MovieDto> getMovieByNameLike(String name) {
+		Iterable<Movie> movies = this.movieRepository.findByNameContaining(name);
+		return entityListToDto(movies);
+	}
+
+
+	private List<MovieDto> entityListToDto(Iterable<Movie> movies) {
+		List<MovieDto> movieDtos = new ArrayList<MovieDto>();		
+		for(Movie movie : movies)
+		{
+			MovieDto dto = mapper.map(movie, MovieDto.class);
+			movieDtos.add(dto);
+		}
+		
+		return movieDtos;
+	}
+
+	
+	
 }

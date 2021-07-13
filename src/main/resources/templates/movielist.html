@@ -10,17 +10,18 @@
 <div th:if= "${movielist == null}">
 Movies doesn't exist.
 </div>
-	<div class="col-8" th:if="${movielist != null}">
+	<div th:if="${movielist != null}">
 		<h3>Movies List</h3>
 		<!--<p th:text=${cart.movies.size()}></p>-->
-		<table class="table">
+		<table class="table table-striped">
 			<thead>
 				<tr>
 					<th>Name</th>
 					<th>Director</th>
 					<th>Genre</th>
 					<th>Year</th>
-					<th></th>
+					<th>Update</th>
+					<th>Delete</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -30,7 +31,10 @@ Movies doesn't exist.
 					<td th:text=${movies.genre}></td>
 					<td th:text=${movies.year}></td>
 					<td>
-					<a th:href="@{'delete/'+${movies.id}}">Delete</a>
+					<a class="btn btn-primary" th:href="@{'update/'+${movies.id}}" role="button">Update</a>
+					</td>
+					<td>
+					<a class="btn btn-danger" th:href="@{'delete/'+${movies.id}}" role="button">Delete</a>
 					</td>
 				</tr>
 			</tbody>
