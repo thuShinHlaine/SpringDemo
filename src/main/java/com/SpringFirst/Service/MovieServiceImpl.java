@@ -17,6 +17,7 @@ public class MovieServiceImpl implements MovieService{
 	
 	@Autowired(required = true)
 	ModelMapper mapper;
+	
 	private List<MovieDto> entityListToDto(Iterable<Movie> movies) {
 		List<MovieDto> movieDtos = new ArrayList<MovieDto>();		
 		for(Movie movie : movies)
@@ -30,7 +31,9 @@ public class MovieServiceImpl implements MovieService{
 
 	@Override
 	public List<MovieDto> getAllMovies() {
-		Iterable<Movie> movies = this.movieRepository.findAll();
+		//Iterable<Movie> movies = this.movieRepository.findAll();
+
+		Iterable<Movie> movies = this.movieRepository.getAllMovie();
 		return entityListToDto(movies);
 	}
 
