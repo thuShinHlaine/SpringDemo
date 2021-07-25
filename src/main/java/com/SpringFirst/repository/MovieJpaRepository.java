@@ -16,7 +16,7 @@ public interface MovieJpaRepository extends CrudRepository<Movie, Long>{
 	//SQL
 	@Query(value="SELECT * FROM movie ORDER BY director",
 			nativeQuery = true)
-	List<Movie> getAllMovie();
+	List<Movie> getAllMovies();
 	
 	//JPQL
 	@Query(value="SELECT m FROM Movie m")

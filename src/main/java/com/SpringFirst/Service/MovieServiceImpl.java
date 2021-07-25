@@ -35,7 +35,7 @@ public class MovieServiceImpl implements MovieService {
 	public List<MovieDto> getAllMovies() {
 		// Iterable<Movie> movies = this.movieRepository.findAll();
 
-		Iterable<Movie> movies = this.movieRepository.getAllMovie();
+		Iterable<Movie> movies = this.movieRepository.findAll();
 		return entityListToDto(movies);
 	}
 

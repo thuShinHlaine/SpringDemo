@@ -3,21 +3,38 @@ package com.SpringFirst.Model;
 
 
 import java.io.Serializable;
-import java.util.Date;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import org.hibernate.annotations.Formula;
+
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 
 @Entity
 @Data
-public class Movie implements Serializable{
+@EqualsAndHashCode(callSuper = false)
+public class Movie extends BaseEntity implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
+	
+	public Movie()
+	{
+		
+	}
+	public Movie(Long id, String name, String director,Genre genre, Long year)
+	{
+		this.setId(id);
+		this.name = name;
+		this.director = director;
+		this.genre = genre;
+		this.year = year;
+	}
+	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	private Long id;
@@ -31,13 +48,7 @@ public class Movie implements Serializable{
 	@Enumerated(EnumType.STRING)
 	private Genre genre ;
 	
-	@Column(name="create_at")
-	private Date createAt = new Date();
 	
-	@Column(name="update_at")
-	private Date updateAt;
-
-	
-	
-
+	@Formula("year(now()) - year")
+	private Long howOld;
 }

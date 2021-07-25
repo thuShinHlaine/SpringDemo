@@ -31,8 +31,10 @@ public class MovieDto {
 	
 	private Genre genre ;
 	
+	private Long howOld;
+	
 	private Date createAt = new Date();
 	
-	private Date updateAt;
+	private Date updateAt = new Date();
 
 }
